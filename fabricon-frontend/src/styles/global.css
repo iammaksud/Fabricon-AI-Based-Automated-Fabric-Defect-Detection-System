@@ -1,0 +1,1376 @@
+/* ============================================================
+   FABRICON — Industrial AI Dashboard Design System
+   ============================================================ */
+
+:root {
+  /* ---------- Core Brand Palette ---------- */
+  --fc-primary: #0B4F9E;          /* deep blue - primary brand */
+  --fc-primary-dark: #08376E;     /* darker shade for hover/active */
+  --fc-primary-light: #3A78C2;    /* lighter tint for accents */
+
+  --fc-secondary: #0A1F44;        /* dark navy - sidebar/topbar base */
+  --fc-secondary-light: #12294F;
+
+  --fc-bg: #F1F3F6;               /* light gray app background */
+  --fc-surface: #FFFFFF;          /* card/panel surface */
+  --fc-surface-alt: #F7F9FB;      /* subtle alt surface */
+
+  /* ---------- Status Colors ---------- */
+  --fc-success: #1E8E5A;          /* green - OK / normal fabric */
+  --fc-success-bg: #E6F4EC;
+  --fc-danger: #D33A3A;           /* red - defect detected */
+  --fc-danger-bg: #FBEAEA;
+  --fc-warning: #E08A1E;          /* orange - warning / degraded */
+  --fc-warning-bg: #FDF1E1;
+  --fc-info: #2472B5;
+  --fc-info-bg: #E8F1FA;
+
+  /* ---------- Neutrals ---------- */
+  --fc-text-primary: #16223D;
+  --fc-text-secondary: #5A6578;
+  --fc-text-muted: #8A93A6;
+  --fc-border: #E1E5EB;
+  --fc-border-strong: #C7CEDA;
+
+  /* ---------- Layout ---------- */
+  --fc-sidebar-width: 260px;
+  --fc-sidebar-width-collapsed: 76px;
+  --fc-topbar-height: 64px;
+  --fc-radius-sm: 6px;
+  --fc-radius-md: 10px;
+  --fc-radius-lg: 14px;
+
+  /* ---------- Shadows (industrial, subtle depth) ---------- */
+  --fc-shadow-sm: 0 1px 2px rgba(10, 31, 68, 0.06);
+  --fc-shadow-md: 0 2px 10px rgba(10, 31, 68, 0.08);
+  --fc-shadow-lg: 0 8px 24px rgba(10, 31, 68, 0.12);
+
+  /* ---------- Fonts ---------- */
+  --fc-font-base: 'Inter', 'Segoe UI', Roboto, -apple-system, sans-serif;
+  --fc-font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  /* ---------- Transitions ---------- */
+  --fc-transition: all 0.2s ease-in-out;
+}
+
+/* ============================================================
+   GLOBAL RESETS
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--fc-bg);
+  color: var(--fc-text-primary);
+  font-family: var(--fc-font-base);
+  font-size: 14.5px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fc-text-primary);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fc-border-strong);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fc-text-muted);
+}
+
+/* ============================================================
+   BOOTSTRAP OVERRIDES
+   ============================================================ */
+
+.btn-primary {
+  background-color: var(--fc-primary);
+  border-color: var(--fc-primary);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--fc-primary-dark);
+  border-color: var(--fc-primary-dark);
+}
+
+.btn-outline-primary {
+  color: var(--fc-primary);
+  border-color: var(--fc-primary);
+}
+.btn-outline-primary:hover {
+  background-color: var(--fc-primary);
+  border-color: var(--fc-primary);
+}
+
+.btn-success {
+  background-color: var(--fc-success);
+  border-color: var(--fc-success);
+}
+.btn-danger {
+  background-color: var(--fc-danger);
+  border-color: var(--fc-danger);
+}
+.btn-warning {
+  background-color: var(--fc-warning);
+  border-color: var(--fc-warning);
+  color: #fff;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--fc-primary-light);
+  box-shadow: 0 0 0 0.2rem rgba(11, 79, 158, 0.15);
+}
+
+.card {
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-md);
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.table {
+  --bs-table-hover-bg: var(--fc-surface-alt);
+}
+
+/* ============================================================
+   FABRICON — SHARED UI PRIMITIVES (industrial dashboard feel)
+   ============================================================ */
+
+/* Panel: base card-like container used across dashboard/history/settings */
+.fc-panel {
+  background-color: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-md);
+  box-shadow: var(--fc-shadow-sm);
+  padding: 1.25rem;
+}
+
+.fc-panel-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+/* Status pill/badge — used for OK / Defect / Online / Offline everywhere */
+.fc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fc-status-pill::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.fc-status-ok {
+  background-color: var(--fc-success-bg);
+  color: var(--fc-success);
+}
+.fc-status-danger {
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+}
+.fc-status-warning {
+  background-color: var(--fc-warning-bg);
+  color: var(--fc-warning);
+}
+.fc-status-info {
+  background-color: var(--fc-info-bg);
+  color: var(--fc-info);
+}
+.fc-status-idle {
+  background-color: #EEF0F3;
+  color: var(--fc-text-muted);
+}
+
+/* Monospace readouts — for confidence %, timestamps, sensor-like data */
+.fc-mono {
+  font-family: var(--fc-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle grid backdrop for a "control panel" feel on key surfaces */
+.fc-industrial-bg {
+  background-image:
+    linear-gradient(rgba(10, 31, 68, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 31, 68, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Live pulse indicator (camera active / system live) */
+.fc-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--fc-success);
+  position: relative;
+  display: inline-block;
+}
+.fc-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--fc-success);
+  animation: fc-pulse 1.6s ease-out infinite;
+}
+@keyframes fc-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Scrollable content area under fixed topbar */
+.fc-content {
+  padding: 1.75rem;
+  min-height: calc(100vh - var(--fc-topbar-height));
+}
+
+/* ============================================================
+   APPLICATION SHELL — Sidebar / Topbar / Layout
+   ============================================================ */
+
+.fc-app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.fc-sidebar {
+  width: var(--fc-sidebar-width);
+  min-width: var(--fc-sidebar-width);
+  background: linear-gradient(180deg, var(--fc-secondary) 0%, #081833 100%);
+  color: #E7ECF5;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 1030;
+}
+
+.fc-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fc-sidebar-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--fc-radius-sm);
+  background: var(--fc-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.fc-sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.fc-sidebar-brand-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.fc-sidebar-brand-sub {
+  font-size: 0.68rem;
+  color: #8EA0C2;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fc-sidebar-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #B8C4DA;
+}
+
+.fc-sidebar-nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+}
+
+.fc-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--fc-radius-sm);
+  color: #B8C4DA;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: var(--fc-transition);
+}
+
+.fc-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.fc-sidebar-link-active {
+  background: var(--fc-primary);
+  color: #fff;
+  box-shadow: var(--fc-shadow-sm);
+}
+
+.fc-sidebar-footer {
+  padding: 0.85rem 0.75rem 1.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fc-sidebar-logout {
+  color: #E8A0A0;
+}
+.fc-sidebar-logout:hover {
+  background: rgba(211, 58, 58, 0.15);
+  color: #fff;
+}
+
+.fc-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 16, 32, 0.55);
+  z-index: 1020;
+}
+
+/* ---------- Topbar ---------- */
+.fc-topbar {
+  height: var(--fc-topbar-height);
+  background: var(--fc-surface);
+  border-bottom: 1px solid var(--fc-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1010;
+}
+
+.fc-topbar-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+  margin: 0;
+}
+
+.fc-topbar-menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--fc-text-secondary);
+  margin-right: 0.75rem;
+}
+
+.fc-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.fc-topbar-system-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+}
+
+.fc-topbar-admin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 1.1rem;
+  border-left: 1px solid var(--fc-border);
+}
+
+.fc-topbar-admin-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--fc-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.fc-topbar-admin-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.fc-topbar-admin-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+}
+
+.fc-topbar-admin-role {
+  font-size: 0.7rem;
+  color: var(--fc-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Main content column ---------- */
+.fc-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--fc-bg);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  .fc-sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    height: 100vh;
+    transition: left 0.25s ease-in-out;
+  }
+  .fc-sidebar-open {
+    left: 0;
+  }
+}
+
+/* ============================================================
+   LOGIN PAGE
+   ============================================================ */
+
+.fc-login-page {
+  min-height: 100vh;
+  background-color: var(--fc-bg);
+}
+
+.fc-login-grid {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+/* ---------- Left: Branding panel ---------- */
+.fc-login-brand {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--fc-secondary) 0%, #08234A 55%, var(--fc-primary-dark) 100%);
+  color: #E7ECF5;
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+}
+
+.fc-login-brand-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 460px;
+}
+
+.fc-login-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+}
+
+.fc-login-brand-logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--fc-radius-sm);
+  background: var(--fc-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--fc-shadow-md);
+}
+
+.fc-login-brand-logo-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.fc-login-brand-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.fc-login-brand-desc {
+  font-size: 0.95rem;
+  color: #AFC0DE;
+  line-height: 1.6;
+  margin-bottom: 2.25rem;
+}
+
+.fc-login-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2.25rem;
+}
+
+.fc-login-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--fc-radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #DDE5F3;
+}
+
+.fc-login-feature-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--fc-radius-sm);
+  background: rgba(58, 120, 194, 0.25);
+  color: #7FB0E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fc-login-status-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #9FB4D6;
+  font-weight: 500;
+}
+
+.fc-login-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(122, 178, 255, 0.55), transparent);
+  animation: fc-scan 5s linear infinite;
+  z-index: 1;
+}
+
+@keyframes fc-scan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.fc-login-corner-icon {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  color: rgba(255, 255, 255, 0.04);
+  z-index: 1;
+}
+
+/* ---------- Right: Login form ---------- */
+.fc-login-form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.fc-login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.25rem 2rem;
+}
+
+.fc-login-input-group .input-group-text {
+  background-color: var(--fc-surface-alt);
+  border-color: var(--fc-border);
+  color: var(--fc-text-secondary);
+}
+
+.fc-login-toggle-btn {
+  cursor: pointer;
+  background-color: var(--fc-surface-alt);
+}
+.fc-login-toggle-btn:hover {
+  color: var(--fc-primary);
+}
+
+.fc-field-error {
+  color: var(--fc-danger);
+  font-size: 0.78rem;
+  margin-top: 4px;
+}
+
+.fc-login-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+  border: 1px solid rgba(211, 58, 58, 0.25);
+  border-radius: var(--fc-radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.fc-login-submit {
+  padding: 0.6rem 0;
+  font-weight: 600;
+}
+
+.fc-login-hint {
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--fc-text-muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  .fc-login-grid {
+    grid-template-columns: 1fr;
+  }
+  .fc-login-brand {
+    padding: 2.25rem 1.5rem;
+    min-height: 320px;
+  }
+  .fc-login-brand-title {
+    font-size: 1.3rem;
+  }
+  .fc-login-feature-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fc-login-form-wrapper {
+    padding: 1.5rem 1.25rem 2.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .fc-login-feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .fc-login-card {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+/* ---------- Stat Cards ---------- */
+.fc-stat-card {
+  height: 100%;
+}
+
+.fc-stat-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.fc-stat-card-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.fc-stat-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--fc-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fc-stat-icon-primary {
+  background-color: var(--fc-info-bg);
+  color: var(--fc-primary);
+}
+.fc-stat-icon-success {
+  background-color: var(--fc-success-bg);
+  color: var(--fc-success);
+}
+.fc-stat-icon-danger {
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+}
+.fc-stat-icon-warning {
+  background-color: var(--fc-warning-bg);
+  color: var(--fc-warning);
+}
+
+.fc-stat-card-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--fc-text-primary);
+  line-height: 1.1;
+  font-family: var(--fc-font-mono);
+}
+
+.fc-stat-card-suffix {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  margin-left: 2px;
+}
+
+.fc-stat-card-footnote {
+  margin-top: 0.4rem;
+  font-size: 0.76rem;
+  color: var(--fc-text-muted);
+}
+
+/* ---------- Chart container ---------- */
+.fc-chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* ---------- Hardware Monitoring grid ---------- */
+.fc-hardware-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fc-hardware-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.85rem;
+  background-color: var(--fc-surface-alt);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+}
+
+.fc-hardware-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--fc-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fc-hardware-icon-ok {
+  background-color: var(--fc-success-bg);
+  color: var(--fc-success);
+}
+.fc-hardware-icon-down {
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+}
+
+.fc-hardware-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fc-hardware-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+}
+
+/* ---------- Tables (Recent Activity / History) ---------- */
+.fc-table thead th {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fc-text-muted);
+  border-bottom: 1px solid var(--fc-border);
+  padding-bottom: 0.65rem;
+  white-space: nowrap;
+}
+
+.fc-table tbody td {
+  font-size: 0.85rem;
+  color: var(--fc-text-primary);
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--fc-border);
+  white-space: nowrap;
+}
+
+.fc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 575.98px) {
+  .fc-hardware-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   LIVE DETECTION
+   ============================================================ */
+
+/* ---------- Camera frame ---------- */
+.fc-camera-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(160deg, var(--fc-secondary) 0%, #08234A 100%);
+  border-radius: var(--fc-radius-md);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.fc-camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fc-camera-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #A9B7D1;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.fc-camera-empty p {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.fc-camera-empty span {
+  font-size: 0.8rem;
+  max-width: 320px;
+}
+
+.fc-camera-error {
+  color: #F4B3B3;
+}
+.fc-camera-error p {
+  color: #FCD9D9;
+}
+
+.fc-camera-overlay-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+}
+
+.fc-camera-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.7), transparent);
+  animation: fc-scan 3.2s linear infinite;
+  z-index: 1;
+}
+
+/* ---------- Camera controls ---------- */
+.fc-camera-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.fc-capture-toast {
+  margin-top: 0.85rem;
+  padding: 0.6rem 0.85rem;
+  background-color: var(--fc-info-bg);
+  color: var(--fc-primary);
+  border-radius: var(--fc-radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  animation: fc-fade-in 0.2s ease-in;
+}
+
+@keyframes fc-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Detection result card ---------- */
+.fc-result-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--fc-text-muted);
+  padding: 2.5rem 1rem;
+}
+
+.fc-result-empty p {
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  margin-bottom: 2px;
+}
+
+.fc-result-empty span {
+  font-size: 0.8rem;
+  max-width: 240px;
+}
+
+.fc-result-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.75rem 1rem;
+  border-radius: var(--fc-radius-md);
+  margin-bottom: 1.1rem;
+  transition: var(--fc-transition);
+  animation: fc-fade-in 0.25s ease-in;
+}
+
+.fc-result-box-success {
+  background-color: var(--fc-success-bg);
+  color: var(--fc-success);
+}
+
+.fc-result-box-danger {
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+}
+
+.fc-result-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fc-result-status {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.fc-result-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fc-result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--fc-border);
+}
+
+.fc-result-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fc-result-row-label {
+  font-size: 0.82rem;
+  color: var(--fc-text-secondary);
+}
+
+.fc-result-row-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+}
+
+/* ---------- Live Detection: captured image + bounding box overlay ---------- */
+.fc-captured-image-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--fc-radius-md);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: var(--fc-secondary);
+}
+
+.fc-captured-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fc-bbox {
+  position: absolute;
+  border: 2px solid var(--fc-danger);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+.fc-bbox-label {
+  position: absolute;
+  top: -1.35rem;
+  left: -2px;
+  background: var(--fc-danger);
+  color: var(--fc-text-inverse);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--fc-radius-sm);
+  white-space: nowrap;
+}
+
+/* ---------- ESP32 Action Status grid ---------- */
+.fc-esp32-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.fc-esp32-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.85rem;
+  background-color: var(--fc-surface-alt);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 767.98px) {
+  .fc-esp32-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   DETECTION HISTORY
+   ============================================================ */
+
+/* ---------- Filter bar ---------- */
+.fc-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.fc-filter-search {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 220px;
+}
+
+.fc-filter-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fc-text-muted);
+  pointer-events: none;
+}
+
+.fc-filter-search input {
+  padding-left: 2.25rem;
+}
+
+.fc-filter-select {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 170px;
+}
+
+.fc-filter-select-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fc-text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fc-filter-select select {
+  padding-left: 2.1rem;
+}
+
+/* ---------- Skeleton loader ---------- */
+.fc-skeleton {
+  display: inline-block;
+  height: 12px;
+  width: 100%;
+  min-width: 40px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--fc-border) 25%,
+    #EDEFF3 50%,
+    var(--fc-border) 75%
+  );
+  background-size: 200% 100%;
+  animation: fc-skeleton-shine 1.3s ease-in-out infinite;
+}
+
+@keyframes fc-skeleton-shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ---------- Table empty state ---------- */
+.fc-table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 3rem 1rem;
+  color: var(--fc-text-muted);
+  text-align: center;
+}
+
+.fc-table-empty p {
+  font-weight: 600;
+  color: var(--fc-text-secondary);
+  margin-bottom: 2px;
+}
+
+.fc-table-empty span {
+  font-size: 0.82rem;
+}
+
+/* ---------- Pagination ---------- */
+.fc-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--fc-border);
+}
+
+.fc-pagination-info {
+  font-size: 0.8rem;
+  color: var(--fc-text-muted);
+}
+
+.fc-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fc-pagination-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--fc-radius-sm);
+  border: 1px solid var(--fc-border);
+  background-color: var(--fc-surface);
+  color: var(--fc-text-secondary);
+  transition: var(--fc-transition);
+}
+
+.fc-pagination-btn:hover:not(:disabled) {
+  background-color: var(--fc-primary);
+  border-color: var(--fc-primary);
+  color: #fff;
+}
+
+.fc-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.fc-pagination-page {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+  font-family: var(--fc-font-mono);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 575.98px) {
+  .fc-filter-select {
+    min-width: 0;
+    flex: 1 1 48%;
+  }
+  .fc-pagination {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   SYSTEM SETTINGS
+   ============================================================ */
+
+.fc-settings-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.fc-settings-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--fc-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--fc-transition);
+}
+
+.fc-settings-icon-ok {
+  background-color: var(--fc-success-bg);
+  color: var(--fc-success);
+}
+
+.fc-settings-icon-down {
+  background-color: var(--fc-danger-bg);
+  color: var(--fc-danger);
+}
+
+.fc-settings-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fc-settings-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0.6rem 0.75rem;
+  background-color: var(--fc-surface-alt);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+}
+
+.fc-settings-info-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--fc-text-secondary);
+  font-weight: 500;
+}
+
+.fc-settings-info-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fc-text-primary);
+  text-align: right;
+}
+
+/* ---------- System Info card ---------- */
+.fc-sysinfo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.fc-sysinfo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.9rem;
+  background-color: var(--fc-surface-alt);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+}
+
+.fc-sysinfo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--fc-radius-sm);
+  background-color: var(--fc-info-bg);
+  color: var(--fc-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 767.98px) {
+  .fc-sysinfo-grid {
+    grid-template-columns: 1fr;
+  }
+}

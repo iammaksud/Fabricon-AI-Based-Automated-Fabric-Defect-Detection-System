@@ -1,0 +1,145 @@
+/**
+ * Fabricon Design Tokens
+ * AI Industrial Fabric Inspection System
+ */
+
+:root {
+  /* ── Brand Colors ── */
+  --fc-primary: #1a4d8f;
+  --fc-primary-light: #2563b8;
+  --fc-primary-dark: #0f3460;
+  --fc-secondary: #0d1b2a;
+  --fc-secondary-light: #1b2838;
+  --fc-accent: #3b82f6;
+
+  /* ── Semantic Colors ── */
+  --fc-success: #16a34a;
+  --fc-success-light: #dcfce7;
+  --fc-success-dark: #15803d;
+  --fc-danger: #dc2626;
+  --fc-danger-light: #fee2e2;
+  --fc-danger-dark: #b91c1c;
+  --fc-warning: #ea580c;
+  --fc-warning-light: #ffedd5;
+  --fc-warning-dark: #c2410c;
+  --fc-info: #0284c7;
+  --fc-info-light: #e0f2fe;
+
+  /* ── Surface & Background ── */
+  --fc-bg: #f0f2f5;
+  --fc-bg-subtle: #e8ebf0;
+  --fc-surface: #ffffff;
+  --fc-surface-raised: #ffffff;
+  --fc-surface-overlay: rgba(13, 27, 42, 0.55);
+
+  /* ── Text ── */
+  --fc-text-primary: #0f172a;
+  --fc-text-secondary: #475569;
+  --fc-text-muted: #94a3b8;
+  --fc-text-inverse: #ffffff;
+  --fc-text-on-primary: #ffffff;
+
+  /* ── Borders ── */
+  --fc-border: #e2e8f0;
+  --fc-border-strong: #cbd5e1;
+  --fc-border-focus: var(--fc-primary);
+
+  /* ── Sidebar ── */
+  --fc-sidebar-width: 260px;
+  --fc-sidebar-collapsed-width: 72px;
+  --fc-sidebar-bg: var(--fc-secondary);
+  --fc-sidebar-text: rgba(255, 255, 255, 0.72);
+  --fc-sidebar-text-active: #ffffff;
+  --fc-sidebar-hover: rgba(255, 255, 255, 0.08);
+  --fc-sidebar-active: rgba(59, 130, 246, 0.18);
+
+  /* ── Topbar ── */
+  --fc-topbar-height: 64px;
+  --fc-topbar-bg: var(--fc-surface);
+
+  /* ── Typography ── */
+  --fc-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fc-font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+
+  --fc-font-size-xs: 0.75rem;
+  --fc-font-size-sm: 0.875rem;
+  --fc-font-size-base: 1rem;
+  --fc-font-size-lg: 1.125rem;
+  --fc-font-size-xl: 1.25rem;
+  --fc-font-size-2xl: 1.5rem;
+  --fc-font-size-3xl: 1.875rem;
+
+  --fc-font-weight-normal: 400;
+  --fc-font-weight-medium: 500;
+  --fc-font-weight-semibold: 600;
+  --fc-font-weight-bold: 700;
+
+  --fc-line-height-tight: 1.25;
+  --fc-line-height-normal: 1.5;
+  --fc-line-height-relaxed: 1.625;
+
+  --fc-letter-spacing-tight: -0.025em;
+  --fc-letter-spacing-normal: 0;
+  --fc-letter-spacing-wide: 0.05em;
+  --fc-letter-spacing-wider: 0.08em;
+
+  /* ── Spacing Scale ── */
+  --fc-space-1: 0.25rem;
+  --fc-space-2: 0.5rem;
+  --fc-space-3: 0.75rem;
+  --fc-space-4: 1rem;
+  --fc-space-5: 1.25rem;
+  --fc-space-6: 1.5rem;
+  --fc-space-8: 2rem;
+  --fc-space-10: 2.5rem;
+  --fc-space-12: 3rem;
+  --fc-space-16: 4rem;
+
+  /* ── Border Radius ── */
+  --fc-radius-sm: 6px;
+  --fc-radius-md: 8px;
+  --fc-radius-lg: 12px;
+  --fc-radius-xl: 16px;
+  --fc-radius-2xl: 20px;
+  --fc-radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --fc-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --fc-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --fc-shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+  --fc-shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.12);
+  --fc-shadow-xl: 0 16px 48px rgba(15, 23, 42, 0.16);
+  --fc-shadow-sidebar: 4px 0 24px rgba(13, 27, 42, 0.15);
+  --fc-shadow-card: 0 2px 12px rgba(15, 23, 42, 0.06);
+  --fc-shadow-card-hover: 0 8px 24px rgba(15, 23, 42, 0.1);
+
+  /* ── Transitions ── */
+  --fc-transition-fast: 150ms ease;
+  --fc-transition-base: 200ms ease;
+  --fc-transition-slow: 300ms ease;
+  --fc-transition-sidebar: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Z-Index Scale ── */
+  --fc-z-sidebar: 1040;
+  --fc-z-topbar: 1030;
+  --fc-z-overlay: 1050;
+  --fc-z-modal: 1060;
+
+  /* ── Bootstrap Overrides ── */
+  --bs-body-font-family: var(--fc-font-family);
+  --bs-body-color: var(--fc-text-primary);
+  --bs-body-bg: var(--fc-bg);
+  --bs-primary: var(--fc-primary);
+  --bs-primary-rgb: 26, 77, 143;
+  --bs-secondary: var(--fc-secondary);
+  --bs-success: var(--fc-success);
+  --bs-danger: var(--fc-danger);
+  --bs-warning: var(--fc-warning);
+  --bs-info: var(--fc-info);
+  --bs-border-color: var(--fc-border);
+  --bs-border-radius: var(--fc-radius-md);
+  --bs-border-radius-sm: var(--fc-radius-sm);
+  --bs-border-radius-lg: var(--fc-radius-lg);
+  --bs-link-color: var(--fc-primary);
+  --bs-link-hover-color: var(--fc-primary-dark);
+}
